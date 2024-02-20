@@ -21,20 +21,22 @@
             <hr />
             <div class="" style="padding: 15px">
                 <p class="mb-3">
-                    <input placeholder="nome" type="text" name="author" class="form-control" />
+                    <input placeholder="nome" type="text" name="author" class="form-control"
+                        v-model="name" />
                 </p>
                 <p class="mb-3">
-                    <textarea placeholder="Comentário" name="message" class="form-control"></textarea>
+                    <textarea placeholder="Comentário" name="message" class="form-control"
+                        v-model="message"></textarea>
                 </p>
                 <button v-on:click="addComment" type="submit" class="btn btn-primary">Comentar</button>
             </div>
 
             <div class="list-group">
-                <div class="list-group-item" v-for="comment in comments">
+                <div class="list-group-item" v-for="(comment, index) in comments">
                     <span class="comment__author">Author: <strong>{{comment.name}}</strong></span>
                     <p>{{comment.message}}</p>
                     <div>
-                        <a href="#" title="Excluir">Excluir</a>
+                        <a href="#" title="Excluir" v-on:click.prevent="removeComment(index)">Excluir</a>
                     </div>
                 </div>
 
@@ -51,15 +53,38 @@
                                 message: 'mensagem de teste'
                             },
                             {
-                                name: 'John',
-                                message: 'Lorem ipsum'
+                                name: 'Sena',
+                                message: 'Campeão'
                             }
-                        ]
+                        ],
+                        name: '',
+                        message: ''
                     }
                 },
                 methods: {
                     addComment() {
-                        console.log('tete');
+
+                        if (this.name.trim() == '') {
+                            alert('Preencha o nome!')
+                            return;
+                        }
+
+                        if (this.message.trim() == '') {
+                            alert('Preencha a mensagem!')
+                            return;
+                        }
+                        
+                        this.comments.push({
+                            name: this.name,
+                            message: this.message
+                        });
+
+                        this.name = '';
+                        this.message = '';
+
+                    },
+                    removeComment(index) {
+                        this.comments.splice(index, 1);
                     }
                 }
             })
