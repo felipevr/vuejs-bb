@@ -32,6 +32,8 @@
             </div>
 
             <div class="list-group">
+                <p v-if="comments.length <= 0">Sem comentários ... </p>
+                <p v-else>Veja abaixo os comentários:</p>
                 <div class="list-group-item" v-for="(comment, index) in allComments">
                     <span class="comment__author">Author: <strong>{{comment.name}}</strong></span>
                     <p>{{comment.message}}</p>
